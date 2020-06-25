@@ -46,7 +46,7 @@ public class BambooHTTPClient {
         basicAuthPassword=password;
     }
 
-    public BambooHTTPResponse  sendRequest(BambooHTTPRequest req) throws ClassNotFoundException {
+    public BambooHTTPResponse  sendRequest(BambooHTTPRequest req) {
         BambooHTTPResponse ret=new BambooHTTPResponse();
         HttpsURLConnection.setDefaultSSLSocketFactory(sslContext.getSocketFactory());
         try {
@@ -83,12 +83,14 @@ public class BambooHTTPClient {
             }
             ret.content=null;
             try {
-                ObjectInputStream in = new ObjectInputStream(connection.getInputStream());
-//                List<BambooHrEmployee> output=(List<BambooHrEmployee>)in.readObject()
-                ret.content = (BambooHrEmployeeRes) in.readObject();
+                ObjectInputStream in = new ObjectInputStream((connection.getInputStream()));
+                ret.content= (BambooHrEmployeeRes) in.readObject();
+                        //slurp(connection.getInputStream() );
             }
             catch(java.io.IOException e) {
-                System.out.println (e.toString());
+            } catch (ClassNotFoundException e) {
+                System.out.printf("EXCEPTION  %s%n", e);
+                e.printStackTrace();
             }
         }
         catch(java.net.MalformedURLException e) {

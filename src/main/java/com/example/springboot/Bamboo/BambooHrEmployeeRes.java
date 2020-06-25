@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public class BambooHrEmployeeRes implements Serializable {
-
     private List<BambooHrEmployee> employees;
 
     public List<BambooHrEmployee> getEmployees() {
