@@ -4,14 +4,19 @@ syntax = "proto3";
 package courier;
 
 service CourierService {
-  rpc FindPath(StartingCity) returns (stream Paths){}
+  rpc FindPath(StartingCity) returns (Path){}
 }
 
 message StartingCity {
-  string city = 1;
+  string city1 = 1;
+  string city2 = 2;
+}
+
+message Path {
+  string path = 1;
+  uint32 value = 2;
 }
 
 message Paths {
-  string path = 1/* [(scalapb.field).collection_type="collection.immutable.Seq"]*/;
-  uint32 value = 2;
+  repeated Path path = 1;
 }
