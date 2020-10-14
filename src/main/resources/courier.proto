@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+
+package courier;
+
+service CourierService {
+  rpc FindPath(StartingCity) returns (stream Paths){}
+}
+
+message StartingCity {
+  string city = 1;
+}
+
+message Paths {
+  string path = 1/* [(scalapb.field).collection_type="collection.immutable.Seq"]*/;
+  uint32 value = 2;
+}
